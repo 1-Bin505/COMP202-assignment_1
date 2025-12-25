@@ -13,6 +13,8 @@ class Queue:
         return len(self.queue) == 0
     def size(self):
         return len(self.queue)
+    def __iter__(self):
+        return iter(self.queue)
     def __str__(self):
         return str(self.queue)
 
@@ -73,52 +75,43 @@ def generator():
 def traversal():
     global LaneA_light,LaneB_light,LaneD_light,LaneC_light
 
-    while True :
-        if LaneA_light== "GREEN" :
-
-            if not lane["AL2"].is_empty() :
+    while True:
+        if LaneA_light == "GREEN":
+            if not lane["AL2"].is_empty():
                 car = lane["AL2"].dequeue()
                 lane["BL1"].enqueue(car)
-                return"AL2 car moved to BL1"
-
+                return "AL2 car moved to BL1"
             elif not lane["AL3"].is_empty():
                 car = lane["AL3"].dequeue()
-                lane["CL1"].enqueue(car)
-                return"AL3 moved to CL1"
+                lane["CL1"].enqueue(car)  # AL3 exits via CL1
+                return "AL3 car moved to CL1"
 
-        if LaneB_light == "GREEN" :
-
-            if not lane["BL2"].is_empty() :
+        if LaneB_light == "GREEN":
+            if not lane["BL2"].is_empty():
                 car = lane["BL2"].dequeue()
                 lane["AL1"].enqueue(car)
-                return"BL2 car moved to AL1"
-
+                return "BL2 car moved to AL1"
             elif not lane["BL3"].is_empty():
                 car = lane["BL3"].dequeue()
-                lane["DL1"].enqueue(car)
-                return"BL3 car moved to DL1"
+                lane["DL1"].enqueue(car)  # BL3 exits via DL1
+                return "BL3 car moved to DL1"
 
-        if LaneD_light == "GREEN" :
-
-            if not lane["DL2"].is_empty() :
+        if LaneD_light == "GREEN":
+            if not lane["DL2"].is_empty():
                 car = lane["DL2"].dequeue()
                 lane["CL1"].enqueue(car)
-                return"DL2 car moved to CL1"
-
+                return "DL2 car moved to CL1"
             elif not lane["DL3"].is_empty():
                 car = lane["DL3"].dequeue()
-                lane["AL1"].enqueue(car)
-                return"DL3 car moved to AL1"
+                lane["AL1"].enqueue(car)  # DL3 exits via AL1
+                return "DL3 car moved to AL1"
 
-        if LaneC_light == "GREEN" :
-
-            if not lane["CL2"].is_empty() :
+        if LaneC_light == "GREEN":
+            if not lane["CL2"].is_empty():
                 car = lane["CL2"].dequeue()
                 lane["DL1"].enqueue(car)
-                return"CL2 car moved to DL1"
-
+                return "CL2 car moved to DL1"
             elif not lane["CL3"].is_empty():
                 car = lane["CL3"].dequeue()
-                lane["BL1"].enqueue(car)
-                return"CL3 car moved to BL1"
-            
+                lane["BL1"].enqueue(car)  # CL3 exits via BL1
+                return "CL3 car moved to BL1"
