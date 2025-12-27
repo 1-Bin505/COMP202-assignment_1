@@ -68,6 +68,7 @@ sudo dnf install python3-pygame    # Fedora
 ```
 
 2. **Environment Setup**
+   
 
 Clone the repository:
 ```bash
@@ -107,7 +108,29 @@ python src/visualizer.py
 *Output*: A **Pygame** window will launch that simulates real-time traffic intersection.
 
 ## Logic & Algorithms
+**1. Queue Management** (`queue_ds.py`):
 
+All lane utilize a standard **Linear Queue** that has been implemented via a Python list, following **FIFO (First-In-First-Out)** principle. The major functions used in this class are:
+
+* `enqueue()`: Appends a vehicle to the rear end of the lane when detected.
+* `dequeue()`: Removes the vehicle at the front of the lane queue when light is green and the vehicle crosses the junction.
+
+**2. Priority Queue Algorithm**  (`priority_queue.py`):
+
+The assignment specifically requires focus on **Priority Management**. This project implements a **Single-Lane Priority Wrapper**. The `LanePriorityQueue` class registers **AL2** lane and unlike a standard priority queue that might sort by time, this instance is one of "Conditional Priority" where the priority is set based on load.
+**1. Queue Operations** (`queue_ds.py`):
+
+The system uses a custom queue implemented using Python lists for vehicle management.
+
+* `enqueue(item)`: *O(1) amortized.* Appending to the end of a Python list is a constant time operation.
+* `dequeue()`: *O(n)*, where *n* is the number of vehicles in the lane. Removing from the front of a standard Python list requires shifting all subsequent elements.
+
+**2. Priority Logic & Decision Making** (`intersection.py`):
+
+At every simulation step, the controller decides which lane to serve.
+
+* `total_normal_vehicles_count()`: *O(k)*, where *k* is the number of lanes, i.e. 12.
+* `serve_priority_lane()`: *O(1)* as it checks the only registered priority lane (`AL2`) and it's size against the threshold.
 
 ## References
 
